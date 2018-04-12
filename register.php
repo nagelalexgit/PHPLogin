@@ -1,33 +1,37 @@
 <?php
 // Include config file
 require_once 'config.php';
- 
+
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = "";
-$username_err = $password_err = $confirm_password_err = "";
- 
+$department = $username = $password = $confirm_password = "";
+$department_err = $username_err = $password_err = $confirm_password_err = "";
+
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
+
     // Validate username
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter a username.";
+    }
+    elseif (empty(trim($_POST["department"]))){
+      $department_err = "Please enter a department code.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE username = ?";
-        
+        $sql = "SELECT id FROM emps WHERE username = ?";
+
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param("s", $param_username);
-            
+
             // Set parameters
             $param_username = trim($_POST["username"]);
-            
+            $param_department = trim($_POST["department"]);
+
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // store result
                 $stmt->store_result();
-                
+
                 if($stmt->num_rows == 1){
                     $username_err = "This username is already taken.";
                 } else{
@@ -37,44 +41,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
-         
+
         // Close statement
         $stmt->close();
     }
-    
+
     // Validate password
     if(empty(trim($_POST['password']))){
-        $password_err = "Please enter a password.";     
+        $password_err = "Please enter a password.";
     } elseif(strlen(trim($_POST['password'])) < 6){
         $password_err = "Password must have atleast 6 characters.";
     } else{
         $password = trim($_POST['password']);
     }
-    
+
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = 'Please confirm password.';     
+        $confirm_password_err = 'Please confirm password.';
     } else{
         $confirm_password = trim($_POST['confirm_password']);
         if($password != $confirm_password){
             $confirm_password_err = 'Password did not match.';
         }
     }
-    
+
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
-        
+    if(empty($department_err) && empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-         
+        $sql = "INSERT INTO emps (username, password, department) VALUES (?, ?, ?)";
+
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ss", $param_username, $param_password);
-            
+            $stmt->bind_param("sss", $param_username, $param_password, $param_department);
+
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            
+
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Redirect to login page
@@ -83,16 +87,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 echo "Something went wrong. Please try again later.";
             }
         }
-         
+
         // Close statement
         $stmt->close();
     }
-    
+
     // Close connection
     $mysqli->close();
 }
 ?>
- 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,7 +117,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <label>Username</label>
                 <input type="text" name="username"class="form-control" value="<?php echo $username; ?>">
                 <span class="help-block"><?php echo $username_err; ?></span>
-            </div>    
+            </div>
+            <div class="form-group <?php echo (!empty($department_err)) ? 'has-error' : ''; ?>">
+                <label>Department</label>
+                <input type="text" name="department"class="form-control" value="<?php echo $department; ?>">
+                <span class="help-block"><?php echo $department_err; ?></span>
+            </div>
             <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                 <label>Password</label>
                 <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
@@ -130,6 +139,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
         </form>
-    </div>    
+    </div>
 </body>
 </html>
