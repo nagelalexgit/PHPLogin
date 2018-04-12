@@ -1,0 +1,16 @@
+DROP SCHEMA IF EXISTS `testDB` ;
+CREATE SCHEMA IF NOT EXISTS `testDB` ;
+
+USE testDB;
+
+DROP TABLE IF EXISTS `emps`;
+
+CREATE TABLE emps (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+				username VARCHAR(50) NOT NULL UNIQUE, 
+					password VARCHAR(255) NOT NULL,
+						department VARCHAR(50), 
+							reg_date DATETIME DEFAULT CURRENT_TIMESTAMP);
+
+
+select * from emps;
+
