@@ -3,8 +3,11 @@
 require_once 'config.php';
 
 // Define variables and initialize with empty values
-$username = $password = "";
-$username_err = $password_err = "";
+$username = $password = $department = "";
+$username_err = $password_err = $department_err = "";
+$dep1 = "dep1";
+$dep2 = "dep2";
+
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -26,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT username, password FROM emps WHERE username = ?";
+        $sql = "SELECT username, password, department FROM emps WHERE username = ?";
 
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
@@ -43,14 +46,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if username exists, if yes then verify password
                 if($stmt->num_rows == 1){
                     // Bind result variables
-                    $stmt->bind_result($username, $hashed_password);
+                    $stmt->bind_result($username, $hashed_password,$department);
                     if($stmt->fetch()){
                         if(password_verify($password, $hashed_password)){
                             /* Password is correct, so start a new session and
                             save the username to the session */
-                            session_start();
-                            $_SESSION['username'] = $username;
-                            header("location: welcome.php");
+                            if($department == $dep1){
+                              session_start();
+                              $_SESSION['username'] = $username;
+                              header("location: welcome.php");
+                            }
+                            if ($department == $dep2){
+                              session_start();
+                              $_SESSION['username'] = $username;
+                              header("location: welcome2.php");
+                            } else {
+                                echo 'You are not assigned to any valid department!! <br>
+                                    Please contact Your system administrator.';
+                            }
                         } else{
                             // Display an error message if password is not valid
                             $password_err = 'The password you entered was not valid.';
