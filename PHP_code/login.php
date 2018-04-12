@@ -54,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             if($department == $dep1){
                               session_start();
                               $_SESSION['username'] = $username;
-                              header("location: welcome.php");
+                              header("location: recovery_dep.php");
                             }
                             if ($department == $dep2){
                               session_start();
