@@ -25,6 +25,18 @@ CREATE TABLE bayregister (id INT NOT NULL PRIMARY KEY,
 						alarmStatus bool, alarmTime timestamp, 
 							note VARCHAR(255));
                             
+INSERT INTO bayregister values(1,25,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
+INSERT INTO bayregister values(2,27,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
+INSERT INTO bayregister values(3,29,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
+INSERT INTO bayregister values(4,21,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
+INSERT INTO bayregister values(5,22,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
+INSERT INTO bayregister values(6,12,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
+INSERT INTO bayregister values(7,34,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
+INSERT INTO bayregister values(8,67,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
+
+SELECT * FROM bayregister;
+SELECT * FROM patients;
+                            
 
  
 

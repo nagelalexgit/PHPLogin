@@ -14,7 +14,11 @@ require_once 'config.php';
 $pname = $ptype = $bayno = "";
 $pname_err = $ptype_err = $bayno_err = "";
 $patient_status = "Not yet available";
-$var = microtime(true);
+$date = date('Y/m/d H:i');
+$assignStatus = 0;
+$reqStatus = 0;
+$transStatus = 0;
+$alarmStatus = 0;
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -30,66 +34,102 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $bayno_err = "Please enter a Bay No.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT * FROM bayregister WHERE pname = ? AND ptype = ? AND bayno = ?";
+        $sql = "SELECT * FROM bayregister WHERE id = ?";
 
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ssi", $param_pname,$param_ptype,$param_bayno);
+            $stmt->bind_param("i", $param_bayno);
 
             // Set parameters
-            $param_pname = trim($_POST["pname"]);
-            $param_ptype = trim($_POST["ptype"]);
+            //$param_pname = trim($_POST["pname"]);
+            //$param_ptype = trim($_POST["ptype"]);
             $param_bayno = (int)trim($_POST["bayno"]);
 
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // store result
-                $stmt->store_result();
-
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                $assignStatus = $row['assignStatus'];
+                //echo $assignStatus;
+                ///////////////////////////////////////////////
                 if($stmt->num_rows == 1){
-                    $patient_status = "This patient is already assigned.";
+                    $patient_status = "Bay is already assigned.";
                 } else{
+                    $sql = "INSERT INTO patients VALUES(pname = ?, ptype = ? )";
+
                     $pname = trim($_POST["pname"]);
                     $ptype = trim($_POST["ptype"]);
-                    $bayno = trim($_POST["bayno"]);
-                }
+                    //$bayno = trim($_POST["bayno"]);
+                  }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
-        // Close statement
-        //$stmt->close();
     }
     // Check input errors before inserting in database
     if(empty($pname_err) && empty($ptype_err) && empty($bayno_err)){
+        if($assignStatus == false){
+          // Prepare an insert statement
+          $sql = "INSERT INTO patients(pname, ptype) VALUES (?, ?)";
 
-        // Prepare an insert statement
-        $sql = "INSERT INTO bayregister(pname, ptype, bayno) VALUES (?, ?, ?)";
+          if($stmt = $mysqli->prepare($sql)){
+              // Bind variables to the prepared statement as parameters
+              $stmt->bind_param("ss", $param_pname, $param_ptype);
 
-        if($stmt = $mysqli->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ssi", $param_pname, $param_ptype, $param_bayno);
+              // Set parameters
+              $param_pname = trim($_POST["pname"]);
+              $param_ptype = trim($_POST["ptype"]);
+              // Attempt to execute the prepared statement
+              if($stmt->execute()){
+                  // print patient status
+                  $patient_status;
+                  $sql = "SELECT pid FROM patients ORDER BY pid DESC LIMIT 1";
+                  if($stmt = $mysqli->prepare($sql)){
+                      if($stmt->execute()){
+                        $result = $stmt->get_result();
+                        $row = $result->fetch_assoc();
+                        $pid = $row["pid"];
+                        //echo $pid;
+                        //$sqlStr = "UPDATE bayregister SET `pid` = ?, `assignStatus` = ?, `assignTime` = ? WHERE `id` = ?";
+                        $sqlStr = "UPDATE bayregister SET pid = ? WHERE id = ?";
+                        if($stmtUpdate = $mysqli->prepare($sqlStr)){
+                          // Set parameters
+                          $param_id = $param_bayno;
+                          echo $param_id;
+                          $param_pid = $pid;
+                          echo $param_pid;
+                          $assignStatus = true;
+                          echo $assignStatus;
+                          //$assignTime = date('Y-m-d H:i');
+                          $assignTime = '2035-12-16 16:30:12';
+                          echo $assignTime;
+                          // Bind variables to the prepared statement as parameters
+                          //$stmt->bind_param("iisi", $pram_pid, $assignStatus, $assignTime, $param_id);
+                          $stmtUpdate->bind_param("ii", $pram_pid, $param_id);
 
-            // Set parameters
-            $param_pname = trim($_POST["pname"]);
-            $param_ptype = trim($_POST["ptype"]);
-            $param_bayno = (int)trim($_POST["bayno"]);
-
-            // Attempt to execute the prepared statement
-            if($stmt->execute()){
-                // Redirect to login page
-                $patient_status = "Patient assigned successful";
-            } else{
-                echo "Something went wrong. Please try again later.";
-            }
+                          if($stmtUpdate->execute()){
+                              // print patient status
+                              $patient_status = "Patient assigned successful";
+                          }else{
+                              echo "Cannot execute";
+                          }
+                        }
+                      }
+                  }
+                  // Close statement
+                  //$stmt->close();
+              } else{
+                  echo "Something went wrong. Please try again later.";
+              }
+          }
+        }else{
+          echo "Bay is already assigned";
         }
-        // Close statement
-        $stmt->close();
-    }
     // Close connection
     $mysqli->close();
   }
-
+}
 ?>
 
 <!DOCTYPE html>
@@ -130,11 +170,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
                 <div class="form-group <?php echo (!empty($bayno_err)) ? 'has-error' : ''; ?>">
                     <label>Bay No.</label>
-                    <div class="btn-toolbar">
-                      <div class="btn-group">
-                          ...
-                      </div>
-                    </div>
                     <input type="text" name="bayno" class="form-control" value="<?php echo $bayno; ?>">
                     <span class="help-block"><?php echo $bayno_err; ?></span>
                 </div>
@@ -166,13 +201,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   <section class="about">
     <div>
       <p>
-        You are currently loged in as <b><?php echo htmlspecialchars($_SESSION['username']); ?></b>. Only features for your deparment are enabled.
+        You are currently loged in as <b><?php echo htmlspecialchars($_SESSION['username']); ?> </b> at <b><?php echo $date ?></b>. Only features for your deparment are enabled.
       </p>
     </div>
   </section>
   <p><a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a></p>
-  <?php echo $var ?>
-
 
 </body>
 </html>
