@@ -1,20 +1,31 @@
-function alarmFunction() {
-  element = document.getElementById("bay1Button").className = "buttonAlarm";
-  element = document.getElementById("bay1Button").innerHTML = 'Bay 1 <br> Abnormal delay <br> Request has been sent';
+
+var delay = 1000;
+
+function alarmFunction(id) {
+  element = document.getElementById(id).className = "buttonAlarm";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Abnormal delay <br> Request has been sent";
 }
-function pendingFunction() {
-  element = document.getElementById("bay2Button").className = "buttonPending";
-  element = document.getElementById("bay2Button").innerHTML = 'Bay 2 <br> Pending transfer';
+function pendingFunction(id) {
+  element = document.getElementById(id).className = "buttonPending";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Pending transfer";
 }
-function assignFunction() {
-  element = document.getElementById("bay3Button").className = "buttonAssigned";
-  element = document.getElementById("bay3Button").innerHTML = 'Bay 3 <br> Patient assigned';
+function assignFunction(id) {
+  element = document.getElementById(id).className = "buttonAssigned";
+  element = document.getElementById(id).innerHTML = "Bay " + id.slice(-1) + "<br> Patient assigned";
+  alert("Patient assigned successful");
 }
-function acceptedFunction() {
-  element = document.getElementById("bay4Button").className = "buttonAccepted";
-  element = document.getElementById("bay4Button").innerHTML = 'Bay 3 <br> Transfer accepted';
+function acceptedFunction(id) {
+  element = document.getElementById(id).className = "buttonAccepted";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Transfer accepted";
+  alert("Request for transfer is accepted");
 }
-function defaultFunction() {
-  element = document.getElementById("bay4Button").className = "button";
-  element = document.getElementById("bay4Button").innerHTML = 'Bay 3 <br> Ready';
+function defaultFunction(id) {
+  element = document.getElementById(id).className = "button";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ "<br> Ready";
+}
+function callMe() {
+  alert("ihdioeragheoigashiogsergseriogsi");
+}
+function assignTimeOut(id,status) {
+  setTimeout(callMe,delay);
 }

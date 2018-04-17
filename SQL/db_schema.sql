@@ -25,17 +25,21 @@ CREATE TABLE bayregister (id INT NOT NULL PRIMARY KEY,
 						alarmStatus bool, alarmTime timestamp, 
 							note VARCHAR(255));
                             
-INSERT INTO bayregister values(1,25,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
-INSERT INTO bayregister values(2,27,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
-INSERT INTO bayregister values(3,29,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
-INSERT INTO bayregister values(4,21,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
-INSERT INTO bayregister values(5,22,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
-INSERT INTO bayregister values(6,12,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
-INSERT INTO bayregister values(7,34,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
-INSERT INTO bayregister values(8,67,0,null,0,null,0,null,0,null,"bherfbehfugfbhhu");
+INSERT INTO bayregister values(1,0,0,null,0,null,0,null,0,null,"None");
+INSERT INTO bayregister values(2,0,0,null,0,null,0,null,0,null,"None");
+INSERT INTO bayregister values(3,0,0,null,0,null,0,null,0,null,"None");
+INSERT INTO bayregister values(4,0,0,null,0,null,0,null,0,null,"None");
+INSERT INTO bayregister values(5,0,0,null,0,null,0,null,0,null,"None");
+INSERT INTO bayregister values(6,0,0,null,0,null,0,null,0,null,"None");
+INSERT INTO bayregister values(7,0,0,null,0,null,0,null,0,null,"None");
+INSERT INTO bayregister values(8,0,0,null,0,null,0,null,0,null,"None");
 
 SELECT * FROM bayregister;
 SELECT * FROM patients;
+
+## SELECT pid FROM patients ORDER BY pid DESC LIMIT 1;
+
+## UPDATE bayregister SET pid = 6, assignStatus = true, assignTime = '2018-05-22 00:00:00' WHERE id = 4;
                             
 
  
