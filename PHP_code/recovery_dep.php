@@ -103,10 +103,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                           $stmtUpdate->bind_param("iisi", $pid, $assignStatus, $assignTime, $param_id);
 
                           if($stmtUpdate->execute()){
-                              $patient_status = "Patient assigned successful";
-                              $temp_bayno = "bay".$param_id;
+                              $patient_status = "Patient assigned successful.";
+                              //$temp_bayno = "bay".$param_id;
                               //echo $temp_bayno;
-
                               //assignFunction($temp_bayno);
                               //echo "<script>functioncall('{$_GET['id']}');</script>";
                               //echo '<script type="text/javascript"> assignFunction('$temp_bayno');</script>';
@@ -115,34 +114,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                               //$var = "<script> callMe(); </script>";
                               //echo '<script type = "text/javascript"> callMe(); </script';
                               //echo "<script>assignFunction(".$temp_bayno.");</script>";
-                              echo '<script type="text/javascript">assignFunction("bay1");</script>';
+                              //echo '<script type="text/javascript">assignFunction(1);</script>';
+                              //echo "<script>assignFunction({$param_id});</script>";
+                              //echo "<a href=\"javascript:assignFunction('$temp_bayno;');\">sfsef</a>";
+                              echo '<script>alert("Patient assigned successful.");</script>';
+                              //echo '<script>alert("ijgdhogdojgdogjdojgodjg");</script>';
                           }else{
                             echo "Execution failed!!";
                           }
                         }
                       }
                   }
-                  // Close statement
-                  //$stmt->close();
               } else{
                   echo "Something went wrong. Please try again later.";
               }
           }
         }else{
-          echo "Bay is already assigned";
+          //echo "Bay is already assigned";
+          echo '<script>alert("Bay is already assigned");</script>';
         }
     // Close connection
     $mysqli->close();
   }
 }
 ?>
-<script type="text/javascript">
-  function assignFunction(id) {
-    element = document.getElementById(id).className = "buttonAssigned";
-    element = document.getElementById(id).innerHTML = "Bay " + id.slice(-1) + "<br> Patient assigned";
-    alert("Patient assigned successful");
-}
-</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -150,24 +145,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta charset="UTF-8">
     <title>RECOVERY WARD DEPARTMENT</title>
     <script type="text/javascript" src="js/script.js"></script>
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <audio id="myAudio"><source src="js/sounds/alarm.mp3" type="audio/mpeg"></audio>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link rel="stylesheet" href="css/css.css">
     <style type="text/css">
-        body{ height:100%;font: 14px sans-serif; text-align: center;background-color:rgb(206, 206, 206);}
-        html{height:100%}
+        body{ height:100%;font-family: "Times New Roman", Times, serif;; text-align: center;background-color:rgba(175, 184, 157, 0.57);}
+        html{height:95%}
     </style>
 </head>
-<body>
+<body onLoad="clearTimeOut()" onUnload="clearTimeOut()">
   <div class="page-header">
-      <h4>RECOVERY WARD DEPARTMENT.</h4>
+      <h3>RECOVERY WARD DEPARTMENT.</h3>
+      <h4 id="demo">_</h4>
   </div>
   <section class="intro">
     <row>
       <div class="col-lg-6 col-sm-12 left">
         <div class="wrapper">
-            <h3>Patient assignment board</h3>
+            <h3>PATIENT ASSIGMENT BOARD</h3>
             <p>Please fill all fields to assign a patient.</p>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <form id="myForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                     <label>Patient Name</label>
                     <input type="text" name="pname"class="form-control" value="<?php echo $pname; ?>">
@@ -200,10 +198,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <a id=bay2 href="#/Action2" class="button" onclick="pendingFunction(this.id);">Bay 2 <br> Ready</a>
           <a id=bay3 href="#/Action3" class="button" onclick="assignFunction(this.id);">Bay 3 <br> Ready</a>
           <a id=bay4 href="#/Action4" class="button" onclick="acceptedFunction(this.id);">Bay 4 <br> Ready</a>
-          <a id=bay5 href="#/Action5" class="buttonAssigned">Bay 5 <br> Patient assigned</a>
-          <a id=bay6 href="#/Action6" class="buttonPending">Bay 6 <br> Pending transfer</a>
-          <a id=bay7 href="#/Action4" class="buttonAccepted">Bay 7 <br> Transfer accepted</a>
-          <a id=bay8 href="#/Action5" class="buttonAlarm">Bay 8 <br> Abnormal delay <br> Request has been sent</a>
+          <a id=bay5 href="#/Action5" class="button">Bay 5 <br> Ready</a>
+          <a id=bay6 href="#/Action6" class="button">Bay 6 <br> Ready</a>
+          <a id=bay7 href="#/Action4" class="button">Bay 7 <br> Ready</a>
+          <a id=bay8 href="#/Action5" class="button">Bay 8 <br> Ready</a>
         </div>
       </div>
     </row>

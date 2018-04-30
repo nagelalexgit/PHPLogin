@@ -36,6 +36,7 @@ INSERT INTO bayregister values(8,0,0,null,0,null,0,null,0,null,"None");
 
 SELECT * FROM bayregister;
 SELECT * FROM patients;
+SELECT * FROM emps;
 
 ## SELECT pid FROM patients ORDER BY pid DESC LIMIT 1;
 
