@@ -173,12 +173,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
                 <div class="form-group <?php echo (!empty($ptype_err)) ? 'has-error' : ''; ?>">
                     <label>Patient Type</label>
-                    <input type="text" name="ptype"class="form-control" value="<?php echo $ptype; ?>">
+                    <!--<input type="text" name="ptype"class="form-control" value="<?php echo $ptype; ?>">-->
+                    <select class="form-control" name="ptype" type="text" value="<?php echo $ptype; ?>">
+                      <option></option>
+                      <option>DAY</option>
+                      <option>NIGHT</option>
+                      <option>VIP</option>
+                    </select>
                     <span class="help-block"><?php echo $ptype_err; ?></span>
                 </div>
                 <div class="form-group <?php echo (!empty($bayno_err)) ? 'has-error' : ''; ?>">
                     <label>Bay No.</label>
-                    <input type="text" name="bayno" class="form-control" value="<?php echo $bayno; ?>">
+                    <!--<input type="text" name="bayno" class="form-control" value="<?php echo $bayno; ?>">-->
+                    <select class="form-control" name="bayno" type="text" value="<?php echo $bayno; ?>">
+                      <option></option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                    </select>
                     <span class="help-block"><?php echo $bayno_err; ?></span>
                 </div>
                 <div class="form-group">

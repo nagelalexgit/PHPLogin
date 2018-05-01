@@ -5,8 +5,8 @@ require_once 'config.php';
 // Define variables and initialize with empty values
 $username = $password = $department = "";
 $username_err = $password_err = $department_err = "";
-$dep1 = "dep1";
-$dep2 = "dep2";
+$dep1 = "RECOVERY WARD";
+$dep2 = "DAY WARD";
 
 
 // Processing form data when form is submitted

@@ -120,7 +120,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group <?php echo (!empty($department_err)) ? 'has-error' : ''; ?>">
                 <label>Department</label>
-                <input type="text" name="department"class="form-control" value="<?php echo $department; ?>">
+                <!--<input type="text" name="department"class="form-control" value="<?php echo $department; ?>">-->
+                <select class="form-control" name="department" type="text" value="<?php echo $department; ?>">
+                  <option></option>
+                  <option>RECOVERY WARD</option>
+                  <option>DAY WARD</option>
+                </select>
                 <span class="help-block"><?php echo $department_err; ?></span>
             </div>
             <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
