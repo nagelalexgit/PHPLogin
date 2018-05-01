@@ -146,7 +146,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>RECOVERY WARD DEPARTMENT</title>
     <script type="text/javascript" src="js/script.js"></script>
     <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <audio id="myAudio"><source src="js/sounds/alarm.mp3" type="audio/mpeg"></audio>
+    <audio id="myAudio" autoplay><source src="sounds/speech.mp3" type="audio/mpeg"></audio>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link rel="stylesheet" href="css/css.css">
     <style type="text/css">

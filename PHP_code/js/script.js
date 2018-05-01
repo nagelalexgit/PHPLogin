@@ -4,7 +4,7 @@ var delay = 15000;
 function alarmFunction(id) {
   element = document.getElementById(id).className = "buttonAlarm";
   element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Abnormal delay <br> Request has been sent";
-  
+
 }
 
 function pendingFunction(id) {
@@ -41,7 +41,7 @@ function clearTimeOut() {
   setTimeout(clearField,delay);
 }
 // Set the date we're counting down to
-var countDownDate = new Date("April 20, 2018 16:20:25").getTime();
+var countDownDate = new Date("May 1, 2018 15:40:25").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
