@@ -2,18 +2,18 @@
 var delay = 15000;
 
 function alarmFunction(id) {
-  element = document.getElementById(id).className = "buttonAlarm";
-  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Abnormal delay <br> Request has been sent";
+  element = document.getElementById(id).className = "buttonAlarmRW";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Abnormal delay <br> request has been resent";
 
 }
 
 function pendingFunction(id) {
-  element = document.getElementById(id).className = "buttonPending";
-  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Pending transfer";
+  element = document.getElementById(id).className = "buttonRequested";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Transfer requested";
 }
 function assignFunction(id) {
-  element = document.getElementById(id).className = "buttonAssigned";
-  element = document.getElementById(id).innerHTML = "Bay " + id.slice(-1) + "<br> Patient assigned";
+  element = document.getElementById(id).className = "buttonParked";
+  element = document.getElementById(id).innerHTML = "Bay " + id.slice(-1) + "<br> Patient parked";
 }
 function acceptedFunction(id) {
   element = document.getElementById(id).className = "buttonAccepted";
@@ -41,7 +41,7 @@ function clearTimeOut() {
   setTimeout(clearField,delay);
 }
 // Set the date we're counting down to
-var countDownDate = new Date("May 1, 2018 15:40:25").getTime();
+var countDownDate = new Date("May 17, 2018 17:22:25").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -62,7 +62,24 @@ var x = setInterval(function() {
   // If the count down is finished, write some text
   if (distance < 0) {
     clearInterval(x);
-    document.getElementById("countDown").innerHTML = "EXPIRED";
     alarmFunction("bay4");
   }
 }, 1000);
+// getStatus
+function getBayStatus(){
+  jQuery.ajax({
+  type: "POST",
+  url: 'getStatus.php',
+  dataType: 'json',
+  data: {functionname: 'add'},
+
+  success: function (obj, textstatus) {
+                if( !('error' in obj) ) {
+                    yourVariable = obj.result;
+                }
+                else {
+                    console.log(obj.error);
+                }
+          }
+});
+}

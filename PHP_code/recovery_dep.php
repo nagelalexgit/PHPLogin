@@ -11,14 +11,23 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 require_once 'config.php';
 
 // Define variables and initialize with empty values
-$pname = $ptype = $bayno = "";
-$pname_err = $ptype_err = $bayno_err = "";
+$pname = $ptype = $bayno = $sname = $title = "";
+$pname_err = $ptype_err = $bayno_err = $sname_err = $title_err= "";
 $patient_status = "Not yet available";
 $date = date('Y/m/d H:i');
 $assignStatus = 0;
 $reqStatus = 0;
 $transStatus = 0;
 $alarmStatus = 0;
+
+function getStatusFromServer(){
+    $sql = "SELECT * FROM bayregister";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_all();
+    return $row;
+}
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -29,6 +38,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     elseif (empty(trim($_POST["ptype"]))){
       $ptype_err = "Please enter a patient type.";
+    }
+    elseif (empty(trim($_POST["psname"]))){
+      $sname_err = "Please enter a patient surname.";
+    }
+    elseif (empty(trim($_POST["ptitle"]))){
+      $title_err = "Please enter a patient title.";
     }
     elseif (empty(trim($_POST["bayno"]))){
       $bayno_err = "Please enter a Bay No.";
@@ -103,7 +118,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                           $stmtUpdate->bind_param("iisi", $pid, $assignStatus, $assignTime, $param_id);
 
                           if($stmtUpdate->execute()){
-                              $patient_status = "Patient assigned successful.";
+                              $patient_status = "Patient placed successful.";
+                              //include 'php_scripts/getStatus.php';
                               //$temp_bayno = "bay".$param_id;
                               //echo $temp_bayno;
                               //assignFunction($temp_bayno);
@@ -117,7 +133,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                               //echo '<script type="text/javascript">assignFunction(1);</script>';
                               //echo "<script>assignFunction({$param_id});</script>";
                               //echo "<a href=\"javascript:assignFunction('$temp_bayno;');\">sfsef</a>";
-                              echo '<script>alert("Patient assigned successful.");</script>';
+                              echo '<script>alert("Patient placed successful.");</script>';
                               //echo '<script>alert("ijgdhogdojgdogjdojgodjg");</script>';
                           }else{
                             echo "Execution failed!!";
@@ -131,7 +147,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           }
         }else{
           //echo "Bay is already assigned";
-          echo '<script>alert("Bay is already assigned");</script>';
+          echo '<script>alert("Bay is temporarily not available.");</script>';
         }
     // Close connection
     $mysqli->close();
@@ -146,11 +162,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>RECOVERY WARD DEPARTMENT</title>
     <script type="text/javascript" src="js/script.js"></script>
     <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--<audio id="myAudio" autoplay><source src="sounds/speech.mp3" type="audio/mpeg"></audio>-->
+    <audio id="myAudio" autoplay><source src="sounds/speech.mp3" type="audio/mpeg"></audio>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link rel="stylesheet" href="css/css.css">
     <style type="text/css">
-        body{ height:100%;font-family: "Times New Roman", Times, serif;; text-align: center;background-color:rgba(175, 184, 157, 0.57);}
+        body{ height:100%;font-family: "Verdana", Times, serif; text-align: center;background-color:rgba(200, 200, 150, 0.5);}
         html{height:95%}
     </style>
 </head>
@@ -163,22 +179,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <row>
       <div class="col-lg-6 col-sm-12 left">
         <div class="wrapper">
-            <h3>PATIENT ASSIGMENT BOARD</h3>
-            <p>Please fill all fields to assign a patient.</p>
+            <h3>PATIENT PARKING SYSTEM</h3>
+            <p>Please fill all fields to park a patient.</p>
             <form id="myForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+              <div class="form-group <?php echo (!empty($ptype_err)) ? 'has-error' : ''; ?>">
+                  <label>Patient Title</label>
+                  <select class="form-control" name="ptype" type="text" value="<?php echo $ptype; ?>">
+                    <option></option>
+                    <option>Dr</option>
+                    <option>Mr</option>
+                    <option>Mrs</option>
+                    <option>Miss</option>
+                    <option>Ms</option>
+                  </select>
+                  <span class="help-block"><?php echo $ptype_err; ?></span>
+              </div>
                 <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                    <label>Patient Name</label>
+                    <label>First Name</label>
                     <input type="text" name="pname"class="form-control" value="<?php echo $pname; ?>">
+                    <span class="help-block"><?php echo $pname_err; ?></span>
+                </div>
+                <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                    <label>Surname</label>
+                    <input type="text" name="sname"class="form-control" value="<?php echo $pname; ?>">
                     <span class="help-block"><?php echo $pname_err; ?></span>
                 </div>
                 <div class="form-group <?php echo (!empty($ptype_err)) ? 'has-error' : ''; ?>">
                     <label>Patient Type</label>
-                    <!--<input type="text" name="ptype"class="form-control" value="<?php echo $ptype; ?>">-->
                     <select class="form-control" name="ptype" type="text" value="<?php echo $ptype; ?>">
                       <option></option>
-                      <option>DAY</option>
-                      <option>NIGHT</option>
-                      <option>VIP</option>
+                      <option>DAY CASE</option>
+                      <option>INPATIENT</option>
                     </select>
                     <span class="help-block"><?php echo $ptype_err; ?></span>
                 </div>
@@ -200,11 +231,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
                 <div class="form-group">
                     <input type="reset" class="btn btn-default" value="Reset">
-                    <input type="submit" class="btn btn-primary" value="Assign">
-                </div>
-                <div class="form-group <?php echo (!empty($patient_status)) ? 'has-error' : ''; ?>">
-                    <label>Patient Status</label>
-                    <span class="help-block"><?php echo $patient_status; ?></span>
+                    <input type="submit" class="btn btn-primary" value="Park Patient">
                 </div>
             </form>
         </div>
@@ -215,7 +242,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <a id=bay2 href="#/Action2" class="button" onclick="pendingFunction(this.id);">Bay 2 <br> Ready</a>
           <a id=bay3 href="#/Action3" class="button" onclick="assignFunction(this.id);">Bay 3 <br> Ready</a>
           <a id=bay4 href="#/Action4" class="button" onclick="acceptedFunction(this.id);">Bay 4 <br> Ready</a>
-          <a id=bay5 href="#/Action5" class="button">Bay 5 <br> Ready</a>
+          <a id=bay5 href="#/Action5" class="button" onclick="getBayStatus();">Bay 5 <br> Ready</a>
           <a id=bay6 href="#/Action6" class="button">Bay 6 <br> Ready</a>
           <a id=bay7 href="#/Action4" class="button">Bay 7 <br> Ready</a>
           <a id=bay8 href="#/Action5" class="button">Bay 8 <br> Ready</a>
@@ -230,7 +257,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       </p>
     </div>
   </section>
-  <p><a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a></p>
+  <p><a href="logout.php" class="btn btn-danger">Sign Out</a></p>
 
 </body>
 </html>

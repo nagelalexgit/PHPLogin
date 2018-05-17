@@ -59,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             if ($department == $dep2){
                               session_start();
                               $_SESSION['username'] = $username;
-                              header("location: welcome2.php");
+                              header("location: dayward_dep.php");
                             } else {
                                 echo 'You are not assigned to any valid department!! <br>
                                     Please contact Your system administrator.';
