@@ -21,7 +21,7 @@ if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
         $json[] = $row;
     }
-    return($json);
+    echo json_encode($json);
 } else {
     echo "0 results";
 }
