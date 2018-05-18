@@ -11,8 +11,8 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 require_once 'config.php';
 
 // Define variables and initialize with empty values
-$pname = $ptype = $bayno = $sname = $title = "";
-$pname_err = $ptype_err = $bayno_err = $sname_err = $title_err= "";
+$pfname = $ptype = $bayno = $psname = $ptitle = "";
+$pfname_err = $ptype_err = $bayno_err = $psname_err = $ptitle_err= "";
 $patient_status = "Not yet available";
 $date = date('Y/m/d H:i');
 $assignStatus = 0;
@@ -33,17 +33,17 @@ function getStatusFromServer(){
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Validate username
-    if(empty(trim($_POST["pname"]))){
-        $pname_err= "Please enter a patient name.";
+    if(empty(trim($_POST["pfname"]))){
+      $pfname_err= "Please enter a patient first name.";
     }
     elseif (empty(trim($_POST["ptype"]))){
       $ptype_err = "Please enter a patient type.";
     }
     elseif (empty(trim($_POST["psname"]))){
-      $sname_err = "Please enter a patient surname.";
+      $psname_err = "Please enter a patient surname.";
     }
     elseif (empty(trim($_POST["ptitle"]))){
-      $title_err = "Please enter a patient title.";
+      $ptitle_err = "Please enter a patient title.";
     }
     elseif (empty(trim($_POST["bayno"]))){
       $bayno_err = "Please enter a Bay No.";
@@ -71,11 +71,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if($stmt->num_rows == 1){
                     $patient_status = "Bay is already assigned.";
                 } else{
-                    $sql = "INSERT INTO patients VALUES(pname = ?, ptype = ? )";
-
-                    $pname = trim($_POST["pname"]);
+                    $sql = "INSERT INTO patients VALUES(ptitle = ?,pfname = ?,psname = ? ptype = ? )";
+                    $ptitle = trim($_POST["ptitle"]);
+                    $pfname = trim($_POST["pfname"]);
+                    $psname = trim($_POST["psname"]);
                     $ptype = trim($_POST["ptype"]);
-                    //$bayno = trim($_POST["bayno"]);
                   }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -83,17 +83,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
     // Check input errors before inserting in database
-    if(empty($pname_err) && empty($ptype_err) && empty($bayno_err)){
+    if(empty($ptitle_err) && empty($pfname_err) && empty($psname_err) && empty($ptype_err) && empty($bayno_err)){
         if($assignStatus == false){
           // Prepare an insert statement
-          $sql = "INSERT INTO patients(pname, ptype) VALUES (?, ?)";
+          $sql = "INSERT INTO patients(ptitle, pfname, psname, ptype) VALUES (?, ?, ?, ?)";
 
           if($stmt = $mysqli->prepare($sql)){
               // Bind variables to the prepared statement as parameters
-              $stmt->bind_param("ss", $param_pname, $param_ptype);
+              $stmt->bind_param("ssss", $param_ptitle, $param_pfname, $param_psname, $param_ptype);
 
               // Set parameters
-              $param_pname = trim($_POST["pname"]);
+              $param_ptitle = trim($_POST["ptitle"]);
+              $param_pfname = trim($_POST["pfname"]);
+              $param_psname = trim($_POST["psname"]);
               $param_ptype = trim($_POST["ptype"]);
               // Attempt to execute the prepared statement
               if($stmt->execute()){
@@ -105,9 +107,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         $result = $stmt->get_result();
                         $row = $result->fetch_assoc();
                         $pid = $row["pid"];
-                        //echo $pid;
                         $sqlStr = "UPDATE bayregister SET pid = ?, assignStatus = ?, assignTime = ? WHERE id = ?";
-                        //$sqlStr = "UPDATE bayregister SET pid = ? WHERE id = ?";
                         if($stmtUpdate = $mysqli->prepare($sqlStr)){
                           // Set parameters
                           $pid = $pid;
@@ -119,22 +119,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                           if($stmtUpdate->execute()){
                               $patient_status = "Patient placed successful.";
-                              //include 'php_scripts/getStatus.php';
-                              //$temp_bayno = "bay".$param_id;
-                              //echo $temp_bayno;
-                              //assignFunction($temp_bayno);
-                              //echo "<script>functioncall('{$_GET['id']}');</script>";
-                              //echo '<script type="text/javascript"> assignFunction('$temp_bayno');</script>';
-                              //$var = $(function(){echo "<script type='text/javascript'> assignFunction();</script>";});
-                              //echo '<script>','callMe();','</script>';
-                              //$var = "<script> callMe(); </script>";
-                              //echo '<script type = "text/javascript"> callMe(); </script';
-                              //echo "<script>assignFunction(".$temp_bayno.");</script>";
-                              //echo '<script type="text/javascript">assignFunction(1);</script>';
-                              //echo "<script>assignFunction({$param_id});</script>";
-                              //echo "<a href=\"javascript:assignFunction('$temp_bayno;');\">sfsef</a>";
                               echo '<script>alert("Patient placed successful.");</script>';
-                              //echo '<script>alert("ijgdhogdojgdogjdojgodjg");</script>';
                           }else{
                             echo "Execution failed!!";
                           }
@@ -170,7 +155,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         html{height:95%}
     </style>
 </head>
-<body onLoad="clearTimeOut()" onUnload="clearTimeOut()">
+<body onload="clearField()" onunload="clearField()">
   <div class="page-header">
       <h3>RECOVERY WARD DEPARTMENT.</h3>
       <h4 id="demo">_</h4>
@@ -181,10 +166,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <div class="wrapper">
             <h3>PATIENT PARKING SYSTEM</h3>
             <p>Please fill all fields to park a patient.</p>
-            <form id="myForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
               <div class="form-group <?php echo (!empty($ptype_err)) ? 'has-error' : ''; ?>">
                   <label>Patient Title</label>
-                  <select class="form-control" name="ptype" type="text" value="<?php echo $ptype; ?>">
+                  <select class="form-control" name="ptitle" type="text" value="<?php echo $ptitle; ?>">
                     <option></option>
                     <option>Dr</option>
                     <option>Mr</option>
@@ -192,17 +177,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <option>Miss</option>
                     <option>Ms</option>
                   </select>
-                  <span class="help-block"><?php echo $ptype_err; ?></span>
+                  <span class="help-block"><?php echo $ptitle_err; ?></span>
               </div>
-                <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                <div class="form-group <?php echo (!empty($pfname_err)) ? 'has-error' : ''; ?>">
                     <label>First Name</label>
-                    <input type="text" name="pname"class="form-control" value="<?php echo $pname; ?>">
-                    <span class="help-block"><?php echo $pname_err; ?></span>
+                    <input id=fname type="text" name="pfname"class="form-control" value="<?php echo $pfname; ?>">
+                    <span class="help-block"><?php echo $pfname_err; ?></span>
                 </div>
-                <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                <div class="form-group <?php echo (!empty($psname_err)) ? 'has-error' : ''; ?>">
                     <label>Surname</label>
-                    <input type="text" name="sname"class="form-control" value="<?php echo $pname; ?>">
-                    <span class="help-block"><?php echo $pname_err; ?></span>
+                    <input id=sname type="text" name="psname"class="form-control" value="<?php echo $psname; ?>">
+                    <span class="help-block"><?php echo $psname_err; ?></span>
                 </div>
                 <div class="form-group <?php echo (!empty($ptype_err)) ? 'has-error' : ''; ?>">
                     <label>Patient Type</label>
@@ -215,7 +200,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
                 <div class="form-group <?php echo (!empty($bayno_err)) ? 'has-error' : ''; ?>">
                     <label>Bay No.</label>
-                    <!--<input type="text" name="bayno" class="form-control" value="<?php echo $bayno; ?>">-->
                     <select class="form-control" name="bayno" type="text" value="<?php echo $bayno; ?>">
                       <option></option>
                       <option>1</option>

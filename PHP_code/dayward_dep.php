@@ -32,17 +32,15 @@ $date = date('Y/m/d H:i');
       <h4 id="demo">_</h4>
   </div>
   <div class="main">
-    <div class="col-lg-6 col-sm-12 right">
-      <div class="button-container">
-        <a id=bay1 href="#/Action1" class="button" onclick="alarmFunction(this.id);">Bay 1 <br> Ready</a>
-        <a id=bay2 href="#/Action2" class="button" onclick="pendingFunction(this.id);">Bay 2 <br> Ready</a>
-        <a id=bay3 href="#/Action3" class="button" onclick="assignFunction(this.id);">Bay 3 <br> Ready</a>
-        <a id=bay4 href="#/Action4" class="button" onclick="acceptedFunction(this.id);">Bay 4 <br> Ready</a>
-        <a id=bay5 href="#/Action5" class="button" onclick="getBayStatus();">Bay 5 <br> Ready</a>
-        <a id=bay6 href="#/Action6" class="button">Bay 6 <br> Ready</a>
-        <a id=bay7 href="#/Action4" class="button">Bay 7 <br> Ready</a>
-        <a id=bay8 href="#/Action5" class="button">Bay 8 <br> Ready</a>
-      </div>
+    <div class="button-container">
+      <a id=bay1 href="#/Action1" class="button" onclick="alarmFunction(this.id);">Bay 1 <br> Ready</a>
+      <a id=bay2 href="#/Action2" class="button" onclick="pendingFunction(this.id);">Bay 2 <br> Ready</a>
+      <a id=bay3 href="#/Action3" class="button" onclick="assignFunction(this.id);">Bay 3 <br> Ready</a>
+      <a id=bay4 href="#/Action4" class="button" onclick="acceptedFunction(this.id);">Bay 4 <br> Ready</a>
+      <a id=bay5 href="#/Action5" class="button" onclick="getBayStatus();">Bay 5 <br> Ready</a>
+      <a id=bay6 href="#/Action6" class="button">Bay 6 <br> Ready</a>
+      <a id=bay7 href="#/Action4" class="button">Bay 7 <br> Ready</a>
+      <a id=bay8 href="#/Action5" class="button">Bay 8 <br> Ready</a>
     </div>
   </div>
   <section class="about">

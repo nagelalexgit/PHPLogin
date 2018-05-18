@@ -1,5 +1,5 @@
 
-var delay = 15000;
+var delay = 1000;
 
 function alarmFunction(id) {
   element = document.getElementById(id).className = "buttonAlarmRW";
@@ -27,21 +27,20 @@ function assignTimeOut(id,status) {
   setTimeout(callMe,delay);
 }
 var myTimer = setInterval(myClock, 1000);
+
 function myClock() {
   document.getElementById("demo").innerHTML =
   new Date().toLocaleTimeString();
 }
 function clearField() {
-  var i;
-  for (i = 0; (i < document.forms.length); i++) {
-    document.forms[i].reset();
+  element = document.getElementById('fname').value= "";
+  element = document.getElementById('sname').value = "";
   }
-}
 function clearTimeOut() {
   setTimeout(clearField,delay);
 }
 // Set the date we're counting down to
-var countDownDate = new Date("May 17, 2018 17:22:25").getTime();
+var countDownDate = new Date("May 18, 2018 13:22:25").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
