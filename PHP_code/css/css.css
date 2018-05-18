@@ -46,11 +46,21 @@ a:active {
     width: auto;
     overflow-y: auto;
 }
+.button-container-day {
+    width: auto;
+    overflow-y: auto;
+}
 .button-container > a {
     float: left;
     text-decoration: none;
     border-radius: 10px;
     margin: 10px;
+}
+.button-container-day > a {
+    float: left;
+    text-decoration: none;
+    border-radius: 10px;
+    margin: 20px;
 }
 .button{
     z-index: 1;
@@ -63,11 +73,36 @@ a:active {
     background: rgba(32, 135, 41, 0.6);
     font-weight:  bold;
 }
+.button-day{
+    z-index: 1;
+    width: 16em;
+    height: 16em;
+    color: white;
+    text-shadow: 2px 2px 4px grey;
+    box-shadow: 3px 3px 6px grey;
+    padding: 6em;
+    background: rgba(32, 135, 41, 0.6);
+    font-weight:  bold;
+}
+.main{
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
 .buttonParked{
     z-index: 1;
     width: 10em;
     height: 10em;
     padding-top: 4em;
+    box-shadow: 3px 3px 6px grey;
+    background: rgba(59, 150, 216, 0.6);
+    font-weight:  bold;
+}
+.buttonParked-day{
+    z-index: 1;
+    width: 16em;
+    height: 16em;
+    padding-top: 6em;
     box-shadow: 3px 3px 6px grey;
     background: rgba(59, 150, 216, 0.6);
     font-weight:  bold;
@@ -83,21 +118,27 @@ a:active {
     background: rgba(127, 63, 191, 0.6);
     font-weight:  bold;
 }
-.buttonAlarm {
+.buttonAccepted-day{
+    z-index: 1;
+    width: 16em;
+    height: 16em;
+    padding-top: 6em;
+    box-shadow: 3px 3px 6px grey;
+    background: rgba(127, 63, 191, 0.6);
+    font-weight:  bold;
+}
+.buttonAlarm-day {
   z-index: 1;
   background-color: #FFFFFF;
   -webkit-border-radius: 10px;
   border-radius: 10px;
   border: none;
   color: #FFFFFF;
-  width: 10em;
-  height: 10em;
-  padding-top: 1em;
-  padding-left: 1em;
-  padding-right: 1em;
+  width: 16em;
+  height: 16em;
+  padding-top: 4.5em;
   font-weight:  bold;
   cursor: pointer;
-  display: inline-block;
   text-align: center;
   text-decoration: none;
   -webkit-animation: glowing 1000ms infinite;
@@ -165,6 +206,26 @@ h3 {
   padding-top: 3em;
   padding-left: 1em;
   padding-right: 1em;
+  font-weight:  bold;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing1 1500ms infinite;
+  -moz-animation: glowing1 1500ms infinite;
+  -o-animation: glowing1 1500ms infinite;
+  animation: glowing1 1500ms infinite;
+}
+.buttonRequested-day {
+  z-index: 1;
+  background-color: #FFFFFF;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  width: 16em;
+  height: 16em;
+  padding-top: 6em;
   font-weight:  bold;
   cursor: pointer;
   display: inline-block;

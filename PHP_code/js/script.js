@@ -4,9 +4,7 @@ var delay = 1000;
 function alarmFunction(id) {
   element = document.getElementById(id).className = "buttonAlarmRW";
   element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Abnormal delay <br> request has been resent";
-
 }
-
 function pendingFunction(id) {
   element = document.getElementById(id).className = "buttonRequested";
   element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Transfer requested";
@@ -23,6 +21,28 @@ function defaultFunction(id) {
   element = document.getElementById(id).className = "button";
   element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ "<br> Ready";
 }
+////////////////////////////////////////////////////////////////////////////////////////////
+function alarmFunctionDay(id) {
+  element = document.getElementById(id).className = "buttonAlarm-day";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Abnormal delay <br> Administrator action <br> required!";
+}
+function pendingFunctionDay(id) {
+  element = document.getElementById(id).className = "buttonRequested-day";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Transfer requested";
+}
+function assignFunctionDay(id) {
+  element = document.getElementById(id).className = "buttonParked-day";
+  element = document.getElementById(id).innerHTML = "Bay " + id.slice(-1) + "<br> Patient parked";
+}
+function acceptedFunctionDay(id) {
+  element = document.getElementById(id).className = "buttonAccepted-day";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Transfer accepted <br> <p id='countDown'></p>";
+}
+function defaultFunctionDay(id) {
+  element = document.getElementById(id).className = "button-day";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ "<br> Ready";
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
 function assignTimeOut(id,status) {
   setTimeout(callMe,delay);
 }
@@ -40,7 +60,7 @@ function clearTimeOut() {
   setTimeout(clearField,delay);
 }
 // Set the date we're counting down to
-var countDownDate = new Date("May 18, 2018 13:22:25").getTime();
+var countDownDate = new Date("May 18, 2018 14:57:25").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -62,23 +82,6 @@ var x = setInterval(function() {
   if (distance < 0) {
     clearInterval(x);
     alarmFunction("bay4");
+    alarmFunctionDay("bay4");
   }
 }, 1000);
-// getStatus
-function getBayStatus(){
-  jQuery.ajax({
-  type: "POST",
-  url: 'getStatus.php',
-  dataType: 'json',
-  data: {functionname: 'add'},
-
-  success: function (obj, textstatus) {
-                if( !('error' in obj) ) {
-                    yourVariable = obj.result;
-                }
-                else {
-                    console.log(obj.error);
-                }
-          }
-});
-}
