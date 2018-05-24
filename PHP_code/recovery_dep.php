@@ -145,11 +145,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <title>RECOVERY WARD DEPARTMENT</title>
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/recoveryWardScript.js"></script>
     <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <audio id="myAudio" autoplay><source src="sounds/speech.mp3" type="audio/mpeg"></audio>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="css/recoveryWard.css">
     <style type="text/css">
         body{ height:100%;font-family: "Verdana", Times, serif; text-align: center;background-color:rgba(200, 200, 150, 0.5);}
         html{height:95%}

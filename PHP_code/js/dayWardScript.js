@@ -2,8 +2,8 @@
 var delay = 1000;
 
 function alarmFunction(id) {
-  element = document.getElementById(id).className = "buttonAlarmRW";
-  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Abnormal delay <br> request has been resent";
+  element = document.getElementById(id).className = "buttonAlarm";
+  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Abnormal delay <br> Administrator action required!";
 }
 function pendingFunction(id) {
   element = document.getElementById(id).className = "buttonRequested";
@@ -11,7 +11,7 @@ function pendingFunction(id) {
 }
 function assignFunction(id) {
   element = document.getElementById(id).className = "buttonParked";
-  element = document.getElementById(id).innerHTML = "Bay " + id.slice(-1) + "<br> Patient parked";
+  element = document.getElementById(id).innerHTML = "Bay " + id.slice(-1) + "<br> Patient parked <br> No action required";
 }
 function acceptedFunction(id) {
   element = document.getElementById(id).className = "buttonAccepted";
@@ -21,28 +21,6 @@ function defaultFunction(id) {
   element = document.getElementById(id).className = "button";
   element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ "<br> Ready";
 }
-////////////////////////////////////////////////////////////////////////////////////////////
-function alarmFunctionDay(id) {
-  element = document.getElementById(id).className = "buttonAlarm-day";
-  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Abnormal delay <br> Administrator action <br> required!";
-}
-function pendingFunctionDay(id) {
-  element = document.getElementById(id).className = "buttonRequested-day";
-  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Transfer requested";
-}
-function assignFunctionDay(id) {
-  element = document.getElementById(id).className = "buttonParked-day";
-  element = document.getElementById(id).innerHTML = "Bay " + id.slice(-1) + "<br> Patient parked";
-}
-function acceptedFunctionDay(id) {
-  element = document.getElementById(id).className = "buttonAccepted-day";
-  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ " <br> Transfer accepted <br> <p id='countDown'></p>";
-}
-function defaultFunctionDay(id) {
-  element = document.getElementById(id).className = "button-day";
-  element = document.getElementById(id).innerHTML = "Bay " +id.slice(-1)+ "<br> Ready";
-}
-//////////////////////////////////////////////////////////////////////////////////////////////
 function assignTimeOut(id,status) {
   setTimeout(callMe,delay);
 }
@@ -60,7 +38,7 @@ function clearTimeOut() {
   setTimeout(clearField,delay);
 }
 // Set the date we're counting down to
-var countDownDate = new Date("May 18, 2018 14:57:25").getTime();
+var countDownDate = new Date("May 24, 2018 15:40:25").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {

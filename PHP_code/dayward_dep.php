@@ -17,10 +17,10 @@ $date = date('Y/m/d H:i');
 <head>
   <meta charset="UTF-8">
   <title>DAY WARD DEPARTMENT</title>
-  <script type="text/javascript" src="js/script.js"></script>
+  <script type="text/javascript" src="js/dayWardScript.js"></script>
   <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-  <link rel="stylesheet" href="css/css.css">
+  <link rel="stylesheet" href="css/dayWard.css">
   <style type="text/css">
       body{ height:100%;font-family: "Verdana", Times, serif; text-align: center;background-color:rgba(175, 184, 157, 0.57);}
       html{height:95%}
@@ -32,15 +32,15 @@ $date = date('Y/m/d H:i');
       <h4 id="demo">_</h4>
   </div>
   <div class="main">
-    <div class="button-container-day">
-      <a id=bay1 href="#/Action1" class="button-day" onclick="alarmFunctionDay(this.id);">Bay 1 <br> Ready</a>
-      <a id=bay2 href="#/Action2" class="button-day" onclick="pendingFunctionDay(this.id);">Bay 2 <br> Ready</a>
-      <a id=bay3 href="#/Action3" class="button-day" onclick="assignFunctionDay(this.id);">Bay 3 <br> Ready</a>
-      <a id=bay4 href="#/Action4" class="button-day" onclick="acceptedFunctionDay(this.id);">Bay 4 <br> Ready</a>
-      <a id=bay5 href="#/Action5" class="button-day" onclick="getBayStatus();">Bay 5 <br> Ready</a>
-      <a id=bay6 href="#/Action6" class="button-day">Bay 6 <br> Ready</a>
-      <a id=bay7 href="#/Action4" class="button-day">Bay 7 <br> Ready</a>
-      <a id=bay8 href="#/Action5" class="button-day">Bay 8 <br> Ready</a>
+    <div class="button-container">
+      <a id=bay1 href="#/Action1" class="button" onclick="alarmFunction(this.id);">BAY 1<br>No action required</a>
+      <a id=bay2 href="#/Action2" class="button" onclick="pendingFunction(this.id);">BAY 2<br>No action required</a>
+      <a id=bay3 href="#/Action3" class="button" onclick="assignFunction(this.id);">BAY 3<br>No action required</a>
+      <a id=bay4 href="#/Action4" class="button" onclick="acceptedFunction(this.id);">BAY 4<br>No action required</a>
+      <a id=bay5 href="#/Action5" class="button" onclick="getBayStatus();">BAY 5<br>No action required</a>
+      <a id=bay6 href="#/Action6" class="button">BAY 6<br>No action required</a>
+      <a id=bay7 href="#/Action4" class="button">BAY 7<br>No action required</a>
+      <a id=bay8 href="#/Action5" class="button">BAY 8<br>No action required</a>
     </div>
   </div>
   <section class="about">
